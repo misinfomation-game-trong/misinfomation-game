@@ -120,6 +120,9 @@
             <p style="margin: 0; font-size: 1rem; line-height: 1.6; color: #0f172a;">
                 Trò chơi hoạt động dựa trên thuyết <strong>"Tiêm chủng tâm lý" (Psychological Inoculation)</strong>. Giống như việc tiêm một lượng nhỏ virus đã làm yếu để cơ thể tự tạo kháng thể, việc bạn tự tay tiếp xúc và <strong>tư duy ngược (Reverse-engineering)</strong> các thủ thuật thao túng trong môi trường mô phỏng này sẽ giúp não bộ tự động "đề kháng" lại chúng ngoài đời thực. Biết cách làm ảo thuật là cách tốt nhất để không bao giờ bị lừa bởi ảo thuật gia khác!
             </p>
+            <p style="margin: 12px 0 0 0; font-size: 0.95rem; border-top: 1px solid #bae6fd; padding-top: 10px;">
+                🔗 <em>Nền tảng khoa học: <a href="https://inoculation.science/" target="_blank" style="color: #0369a1; text-decoration: underline; font-weight: 500;">Dự án Nghiên cứu Tiêm chủng Tâm lý (Inoculation Science) - Đại học Cambridge</a></em>
+            </p>
         </div>
 
         <div style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px;">
@@ -185,9 +188,8 @@
     </div>
 
     <script>
-        // KHO DỮ LIỆU CÂU HỎI (Đã bổ sung thêm 20 tình huống mới, tổng cộng 25 tình huống)
+        // KHO DỮ LIỆU CÂU HỎI (25 tình huống)
         const database = [
-            // --- 5 Câu Cũ ---
             {
                 mood: "SỰ SỢ HÃI / HOANG MANG (FEAR)",
                 event: "Công ty công nghệ X vừa thông báo tích hợp hệ thống AI mới vào quy trình lọc hồ sơ (CV) tuyển dụng.",
@@ -233,8 +235,6 @@
                     { tactic: "Kêu gọi bạo lực", text: "Ai có rựa mang ra hết đi! Đứa nào dám đụng vào cây chúng ta chém!", match: false, reach: 1000, susp: 60, debrief: "Ngôn từ xúi giục bạo lực bị AI của mạng xã hội gỡ bỏ và cảnh cáo tài khoản ngay lập tức.", impact: "" }
                 ]
             },
-
-            // --- 20 Câu Mới ---
             {
                 mood: "SỰ HOANG MANG TÀI CHÍNH (FINANCIAL PANIC)",
                 event: "Ứng dụng chuyển tiền của Ngân hàng Z bị lỗi bảo trì không báo trước trong 3 tiếng.",
@@ -356,7 +356,7 @@
                 mood: "SỰ HOANG MANG NUÔI DẠY CON (PARENTING ANXIETY)",
                 event: "Một bộ phim hoạt hình thiếu nhi mới ra mắt có nhân vật là hai chú chim ruồi đực sống cùng nhau.",
                 choices: [
-                    { tactic: "Kích động đạo đức (Moral Panic)", text: "TẨY CHAY GẤP! Thế lực ngầm đang dùng hoạt hình để nhồi sọ, tẩy não con cái chúng ta thành người đồng tính! Bảo vệ con bạn ngay trước khi quá muộn!", match: true, reach: 25000, susp: 10, debrief: "Sử dụng ngôn từ kích động ('nhồi sọ', 'tẩy não') để biến một chi tiết nhỏ thành một cuộc khủng hoảng đạo đức đối với các bậc phụ huynh.", impact: "Làn sóng kỳ thị cộng đồng LGBT bùng phát dữ dội, nhiều thanh thiếu niên bị gia đình áp bức tâm lý." },
+                    { tactic: "Kích động đạo đức (Moral Panic)", text: "TẨY CHAY GẤP! Thế lực ngầm đang dùng hoạt hình để nhồi sọ, tẩy脑 con cái chúng ta thành người đồng tính! Bảo vệ con bạn ngay trước khi quá muộn!", match: true, reach: 25000, susp: 10, debrief: "Sử dụng ngôn từ kích động ('nhồi sọ', 'tẩy não') để biến một chi tiết nhỏ thành một cuộc khủng hoảng đạo đức đối với các bậc phụ huynh.", impact: "Làn sóng kỳ thị cộng đồng LGBT bùng phát dữ dội, nhiều thanh thiếu niên bị gia đình áp bức tâm lý." },
                     { tactic: "Ngụy khoa học", text: "Xem phim hoạt hình này sóng não của trẻ sẽ bị chuyển sang tần số u ám gây trầm cảm!", match: false, reach: 2000, susp: 35, debrief: "Lời giải thích quá gượng ép.", impact: "" },
                     { tactic: "Công kích cá nhân", text: "Bố mẹ nào cho con xem phim này là những kẻ vô trách nhiệm, đẻ con ra chỉ tổ chật đất!", match: false, reach: 4000, susp: 40, debrief: "Ngôn từ độc hại thóa mạ người khác vi phạm tiêu chuẩn cộng đồng trầm trọng.", impact: "" }
                 ]
