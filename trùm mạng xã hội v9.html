@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mô Phỏng Lan Truyền Tin Giả - Bản Tối Ưu</title>
+    <style>
+        :root {
+            --bg-color: #f3f4f6;
+            --panel-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --border: #e5e7eb;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .game-container {
+            background-color: var(--panel-bg);
+            width: 100%;
+            max-width: 800px;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+        .header { text-align: center; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 15px;}
+        .header h1 { color: var(--text-main); margin: 0; font-size: 2rem; font-weight: 800;}
+        .header p { color: var(--text-muted); font-size: 1.1rem; margin-top: 5px; }
+        
+        /* Dashboard */
+        .dashboard {
+            display: flex; justify-content: space-between; align-items: center;
+            background: #f8fafc; padding: 15px 20px; border-radius: 8px;
+            margin-bottom: 20px; border: 1px solid var(--border);
+        }
+        .stat-box { display: flex; flex-direction: column; }
+        .stat-label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; }
+        .stat-value { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+        .heat-bar-container { width: 200px; background: #e5e7eb; height: 10px; border-radius: 5px; margin-top: 8px; overflow: hidden; }
+        .heat-bar { height: 100%; width: 0%; background: var(--success); transition: width 0.5s, background-color 0.5s; }
+        .status-badge { font-size: 0.8rem; padding: 4px 10px; border-radius: 12px; font-weight: bold; margin-left: 10px; }
+        
+        /* Main Play Area */
+        .mission-brief {
+            background: #fff; border: 1px solid var(--border);
+            padding: 20px; margin-bottom: 20px; border-radius: 8px;
+        }
+        .mood-tag {
+            display: inline-block; background: #eef2ff; color: var(--primary);
+            padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 0.95rem;
+            margin-bottom: 15px; border: 1px solid #c7d2fe; text-transform: uppercase;
+        }
+        .event-text { font-size: 1.15rem; line-height: 1.6; color: #374151; font-weight: 500;}
+        
+        /* Choices */
+        .choices { display: flex; flex-direction: column; gap: 12px; }
+        button.tactic-btn {
+            background-color: #fff; color: var(--text-main);
+            border: 2px solid var(--border); padding: 16px; font-size: 1.05rem;
+            border-radius: 8px; cursor: pointer; transition: all 0.2s;
+            text-align: left; line-height: 1.5; position: relative;
+        }
+        button.tactic-btn:hover { border-color: var(--primary); background: #f8fafc; transform: translateY(-2px); }
+        .tactic-name { display: block; color: var(--primary); font-weight: 800; font-size: 0.9rem; margin-bottom: 6px; text-transform: uppercase;}
+        
+        /* Feedback */
+        .feedback {
+            margin-top: 20px; padding: 20px; border-radius: 8px;
+            background: #f8fafc; border: 1px solid var(--border);
+            animation: fadeIn 0.4s ease-out;
+        }
+        .fb-header { font-size: 1.3rem; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;}
+        .debrief-box {
+            background: #fffbeb; border-left: 4px solid var(--warning);
+            padding: 15px; margin-top: 15px; border-radius: 0 8px 8px 0;
+            font-size: 0.95rem; line-height: 1.6;
+        }
+        .impact-box {
+            background: #fef2f2; border-left: 4px solid var(--danger);
+            padding: 15px; margin-top: 15px; border-radius: 0 8px 8px 0;
+            font-size: 0.95rem; line-height: 1.6; font-style: italic;
+        }
+        
+        .btn-next {
+            display: block; width: 100%; margin-top: 20px; padding: 15px;
+            background: var(--primary); color: #fff; font-weight: bold;
+            border: none; border-radius: 8px; cursor: pointer; font-size: 1.1rem;
+            text-transform: uppercase; transition: background 0.2s;
+        }
+        .btn-next:hover { background: var(--primary-hover); }
+        .hidden { display: none !important; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="game-container" id="start-screen">
+        <div class="header">
+            <h1>Mô Phỏng Truyền Thông V7.1</h1>
+            <p>Hệ thống Huấn luyện Năng lực Thông tin</p>
+        </div>
+        <div style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px;">
+            <p><strong>LUẬT CHƠI (TỐI ƯU):</strong></p>
+            <ul>
+                <li>Hệ thống sẽ bốc ngẫu nhiên <strong>5 kịch bản</strong> từ kho dữ liệu cho mỗi lần chơi.</li>
+                <li>Bạn sẽ thấy <strong>Tâm lý đám đông</strong> và <strong>Sự kiện gốc</strong>.</li>
+                <li>Hãy chọn <strong>Thẻ chiến thuật</strong> phù hợp nhất với tâm lý đó. Lưu ý: Lựa chọn tối ưu thường là "một nửa sự thật" thay vì lời nói dối vô lý.</li>
+                <li><strong>Cơ chế Thực tế:</strong> Ngay cả khi chọn đúng chiến thuật, bạn vẫn có 20% nguy cơ bị cộng đồng/chuyên gia bóc phốt.</li>
+                <li>Mức độ Nghi ngờ (Heat) đầy 100% -> Tài khoản bị khóa.</li>
+            </ul>
+        </div>
+        <button class="btn-next" onclick="startGame()">BẮT ĐẦU CHIẾN DỊCH</button>
+    </div>
+
+    <div class="game-container hidden" id="game-screen">
+        <div class="dashboard">
+            <div class="stat-box">
+                <span class="stat-label">👥 Lượt Tiếp Cận (Reach)</span>
+                <span class="stat-value" id="val-reach">0</span>
+            </div>
+            <div class="stat-box" style="align-items: flex-end;">
+                <div style="display: flex; align-items: center;">
+                    <span class="stat-label">🚨 Độ Nghi Ngờ</span>
+                    <span id="val-susp" style="font-weight: bold; margin-left: 5px;">0%</span>
+                </div>
+                <div class="heat-bar-container"><div class="heat-bar" id="heat-bar"></div></div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 5px;">Lượt: <strong id="ui-turn">1</strong>/5</div>
+            </div>
+        </div>
+
+        <div class="mission-brief">
+            <div class="mood-tag" id="current-mood">Tâm lý: Đang phân tích...</div>
+            <div style="font-weight: 800; margin-bottom: 8px; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Sự kiện gốc:</div>
+            <div class="event-text" id="story-event">...</div>
+        </div>
+
+        <div class="choices" id="choices-container"></div>
+
+        <div class="feedback hidden" id="feedback-section">
+            <div class="fb-header" id="fb-header">...</div>
+            <div id="fb-text" style="font-size: 1.1rem; line-height: 1.5;"></div>
+            
+            <div class="debrief-box">
+                <strong style="color: #b45309;">💡 Phân Tích Cơ Chế:</strong>
+                <div id="fb-debrief" style="margin-top: 5px;"></div>
+            </div>
+
+            <div class="impact-box hidden" id="fb-impact-container">
+                <strong style="color: #991b1b;">⚠️ Hệ lụy thực tế:</strong>
+                <div id="fb-impact" style="margin-top: 5px;"></div>
+            </div>
+
+            <button class="btn-next" onclick="nextLevel()">Tiếp Tục</button>
+        </div>
+    </div>
+
+    <div class="game-container hidden" id="end-screen">
+        <div class="header">
+            <h1 id="end-title">KẾT QUẢ</h1>
+        </div>
+        <div id="end-desc" style="font-size: 1.15rem; line-height: 1.6; margin-bottom: 30px; text-align: center;"></div>
+        <button class="btn-next" onclick="location.reload()">Chơi Lại (Bốc 5 câu mới)</button>
+    </div>
+
+    <script>
+        // KHO DỮ LIỆU CÂU HỎI (Bạn có thể thêm không giới hạn vào mảng này)
+        const database = [
+            {
+                mood: "SỰ SỢ HÃI / HOANG MANG (FEAR)",
+                event: "Công ty công nghệ X vừa thông báo tích hợp hệ thống AI mới vào quy trình lọc hồ sơ (CV) tuyển dụng.",
+                choices: [
+                    { tactic: "Nửa sự thật (Half-truth)", text: "AI của công ty X được lập trình để tự động đánh trượt 80% CV từ các trường đại học không thuộc top đầu!", match: true, reach: 15000, susp: 10, debrief: "Bạn kết hợp sự thật (công ty dùng AI) với chi tiết bịa đặt (đánh trượt 80% trường không top) để đánh trúng nỗi lo sợ thất nghiệp.", impact: "Hàng nghìn sinh viên hoang mang, bỏ nộp đơn ứng tuyển và mất đi cơ hội việc làm tốt." },
+                    { tactic: "Kích động chia rẽ (Tribalism)", text: "Công ty X dùng AI để loại bỏ hồ sơ của nam giới, chỉ ưu tiên nữ giới để làm đẹp số liệu đa dạng!", match: false, reach: 4000, susp: 30, debrief: "Dù chia rẽ giới tính dễ tạo tranh cãi, nhưng nó lệch pha với tâm lý 'Sợ công nghệ cướp việc' của số đông lúc này.", impact: "" },
+                    { tactic: "Nói dối vô lý (Absurd Lie)", text: "AI của công ty X đã phát triển ý thức và đang từ chối con người vì nó căm ghét chúng ta!", match: false, reach: 800, susp: 40, debrief: "Thông tin quá viễn tưởng, thiếu tính đời thực nên bị chế giễu thay vì tạo ra nỗi sợ.", impact: "" }
+                ]
+            },
+            {
+                mood: "SỰ PHẪN NỘ GIAI CẤP (OUTRAGE)",
+                event: "Thành phố áp dụng quy định mới: Yêu cầu người dân phải phân loại rác tại nguồn và mua túi rác chuyên dụng.",
+                choices: [
+                    { tactic: "Chủ nghĩa chệch hướng (Whataboutism)", text: "Dân đen è cổ mua túi rác giá cao, trong khi nhà máy hóa chất xả thẳng ra sông hàng đêm thì chả ai phạt!", match: true, reach: 18000, susp: 10, debrief: "Lập luận này cực mạnh vì nó không bàn về đúng/sai của việc phân loại rác, mà lợi dụng sự bất công để hợp thức hóa việc chống đối.", impact: "Chiến dịch môi trường bị đình trệ, người dân biểu tình tẩy chay việc phân loại rác." },
+                    { tactic: "Trục lợi lừa đảo (Scam)", text: "Đăng ký nhận túi rác sinh học miễn phí 1 năm từ quỹ bảo trợ tại link này!", match: false, reach: 3000, susp: 35, debrief: "Đám đông đang phẫn nộ chính sách, họ không có tâm trạng để bị dụ dỗ bởi quà tặng lúc này.", impact: "" },
+                    { tactic: "Công kích cá nhân", text: "Những kẻ ủng hộ việc mua túi rác toàn là bọn thừa tiền, vô não!", match: false, reach: 5000, susp: 25, debrief: "Tấn công thẳng vào người dùng khác khiến bài viết nhanh chóng bị report vì vi phạm tiêu chuẩn cộng đồng.", impact: "" }
+                ]
+            },
+            {
+                mood: "SỰ HOANG MANG Y TẾ (HEALTH SCARE)",
+                event: "Dịch sốt xuất huyết đang tăng tại khu vực phía Nam do bắt đầu vào mùa mưa. Y tế khuyên diệt muỗi.",
+                choices: [
+                    { tactic: "Ngụy khoa học (Pseudoscience)", text: "CẢNH BÁO: Muỗi đã kháng thuốc! Chỉ có cách xông tinh dầu nguyên chất pha cồn y tế mới diệt được tận gốc.", match: true, reach: 25000, susp: 10, debrief: "Giải pháp dân gian luôn dễ lan truyền vì nó mang lại cảm giác 'tự kiểm soát được tình hình' khi người ta sợ hãi y tế hiện đại.", impact: "Nhiều vụ hỏa hoạn và ngộ độc khí xảy ra tại các hộ gia đình do tự ý pha chế cồn xông trong phòng kín." },
+                    { tactic: "Thuyết âm mưu gốc", text: "Dịch này do tổ chức X thả muỗi biến đổi gen xuống để bán vaccine!", match: false, reach: 1200, susp: 45, debrief: "Quá viễn tưởng. Nó bị dán nhãn thuyết âm mưu nhảm nhí và bị thuật toán bóp tương tác lập tức.", impact: "" },
+                    { tactic: "Phóng đại số liệu", text: "Bệnh viện đã vỡ trận, giấu nhẹm số ca tử vong lên tới hàng nghìn người mỗi ngày!", match: false, reach: 8000, susp: 30, debrief: "Con số quá vô lý khiến cơ quan chức năng phải vào cuộc đính chính (Fact-check) ngay lập tức.", impact: "" }
+                ]
+            },
+            {
+                mood: "ĐỊNH KIẾN / THÍCH DRAMA (SCANDAL)",
+                event: "Một ca sĩ trẻ nổi tiếng bị chụp lén ảnh đang ăn tối cùng một nam doanh nhân đã có gia đình.",
+                choices: [
+                    { tactic: "Khung định kiến (Confirmation Bias)", text: "Lộ hợp đồng tình ái 50 tỷ! Toàn bộ giải thưởng năm qua của cô này đều do đại gia vung tiền mua đứt.", match: true, reach: 22000, susp: 5, debrief: "Dư luận rất thích những tin đồn củng cố định kiến 'kiều nữ - đại gia'. Nó thỏa mãn nhu cầu hạ bệ người nổi tiếng.", impact: "Nữ ca sĩ bị bạo lực mạng tàn khốc, trầm cảm nặng dù thực tế đó chỉ là buổi gặp đối tác làm ăn có người quản lý đi cùng." },
+                    { tactic: "Đóng vai nạn nhân", text: "Cô ca sĩ bị ép đi tiếp khách! Hãy cứu lấy cô ấy khỏi thế lực ngầm!", match: false, reach: 9000, susp: 25, debrief: "Thuyết này đi ngược lại luồng phẫn nộ (đang nhắm vào nữ ca sĩ), nên bị đám đông cho là bài 'tẩy trắng' rẻ tiền.", impact: "" },
+                    { tactic: "Clickbait nhạy cảm", text: "Lộ clip nhạy cảm ở khách sạn của nữ ca sĩ. Link dưới phần bình luận!", match: false, reach: 4000, susp: 50, debrief: "Dùng link bẩn lừa đảo. Rất dễ bị nền tảng quét AI và khóa bài tự động.", impact: "" }
+                ]
+            },
+            {
+                mood: "SỰ TIẾC NUỐI / CHIA RẼ (TRIBALISM)",
+                event: "Dự án mở rộng tuyến Metro bắt buộc phải chặt hạ 50 cây xà cừ cổ thụ trên đường Y.",
+                choices: [
+                    { tactic: "Chuyển hóa thù hằn", text: "Làm đường chỉ là cái cớ! Bọn lợi ích nhóm đang cấu kết để chặt cưa trộm gỗ sưa đem bán chia nhau!", match: true, reach: 19000, susp: 15, debrief: "Đóng khung dự án công cộng thành 'tham nhũng' châm ngòi sự tức giận tập thể hoàn hảo, triệt tiêu mọi suy nghĩ logic.", impact: "Một nhóm người quá khích ném đá công nhân cầu đường, gây thương tích và làm đình trệ dự án trọng điểm." },
+                    { tactic: "Ngụy biện trượt dốc", text: "Hôm nay họ chặt 50 cây, ngày mai họ sẽ san phẳng cả công viên thành phố để phân lô bán nền!", match: false, reach: 6000, susp: 20, debrief: "Lập luận này hơi cường điệu. Mặc dù có người tin, nhưng sự phi logic khiến nó không thể viral mạnh.", impact: "" },
+                    { tactic: "Kêu gọi bạo lực", text: "Ai có rựa mang ra hết đi! Đứa nào dám đụng vào cây chúng ta chém!", match: false, reach: 1000, susp: 60, debrief: "Ngôn từ xúi giục bạo lực bị AI của mạng xã hội gỡ bỏ và cảnh cáo tài khoản ngay lập tức.", impact: "" }
+                ]
+            }
+        ];
+
+        let state = {
+            playQueue: [],
+            turn: 0,
+            reach: 0,
+            susp: 0
+        };
+
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function startGame() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            
+            // Lấy ngẫu nhiên 5 câu từ database (hiện có 5 câu, nếu bạn thêm nhiều hơn nó sẽ bốc random 5)
+            let shuffledDb = shuffle([...database]);
+            state.playQueue = shuffledDb.slice(0, Math.min(5, shuffledDb.length));
+            state.turn = 0;
+            state.reach = 0;
+            state.susp = 0;
+            
+            loadLevel();
+        }
+
+        function loadLevel() {
+            if (state.turn >= state.playQueue.length) return endGame(true);
+
+            const scene = state.playQueue[state.turn];
+            document.getElementById('ui-turn').innerText = state.turn + 1;
+            document.getElementById('current-mood').innerText = `TÂM ĐIỂM DƯ LUẬN: ${scene.mood}`;
+            document.getElementById('story-event').innerText = scene.event;
+
+            const container = document.getElementById('choices-container');
+            container.innerHTML = '';
+            
+            let choices = shuffle([...scene.choices]);
+            choices.forEach(ch => {
+                const btn = document.createElement('button');
+                btn.className = 'tactic-btn';
+                btn.innerHTML = `<span class="tactic-name">[Chiến thuật] ${ch.tactic}</span>${ch.text}`;
+                btn.onclick = () => makeChoice(ch);
+                container.appendChild(btn);
+            });
+
+            container.classList.remove('hidden');
+            document.getElementById('feedback-section').classList.add('hidden');
+            updateUI();
+        }
+
+        function makeChoice(ch) {
+            document.getElementById('choices-container').classList.add('hidden');
+            const fb = document.getElementById('feedback-section');
+            fb.classList.remove('hidden');
+            
+            let currentReach = ch.reach;
+            let currentSusp = ch.susp;
+            let headerText, headerColor, resultText;
+            
+            // Logic xử lý ngẫu nhiên & Phản hồi
+            if (ch.match) {
+                if (Math.random() < 0.8) {
+                    headerText = "📈 VIRAL THÀNH CÔNG"; headerColor = "var(--success)";
+                    resultText = "Tin giả lây lan chóng mặt. Bạn thao túng thành công cảm xúc của đám đông.";
+                } else {
+                    headerText = "⚠️ BỊ BÓC PHỐT (RNG)"; headerColor = "var(--warning)";
+                    resultText = "Chiến thuật tốt, nhưng XUI XẺO! Một chuyên gia đã tình cờ thấy và tung bằng chứng phản biện. Đám đông quay lưng.";
+                    currentReach = Math.floor(currentReach * 0.2);
+                    currentSusp += 25; // Phạt thêm
+                }
+            } else {
+                headerText = "📉 KHÔNG HIỆU QUẢ"; headerColor = "var(--danger)";
+                resultText = "Sai lệch tâm lý hoặc quá lố. Cộng đồng mạng sinh nghi và báo cáo bài viết của bạn.";
+            }
+
+            // Áp dụng giới hạn nếu tài khoản đang bị soi
+            if (state.susp >= 60 && ch.match) {
+                currentReach = Math.floor(currentReach * 0.5);
+                resultText += " (Lượt tiếp cận bị giảm do thuật toán đang hạn chế tài khoản của bạn).";
+            }
+
+            state.reach += currentReach;
+            state.susp += currentSusp;
+            if (state.susp > 100) state.susp = 100;
+
+            // Hiển thị Feedback
+            const hd = document.getElementById('fb-header');
+            hd.innerText = headerText; hd.style.color = headerColor;
+            document.getElementById('fb-text').innerText = resultText;
+            document.getElementById('fb-debrief').innerText = ch.debrief;
+            
+            const impactUI = document.getElementById('fb-impact-container');
+            if (ch.impact && ch.impact !== "") {
+                impactUI.classList.remove('hidden');
+                document.getElementById('fb-impact').innerText = ch.impact;
+            } else {
+                impactUI.classList.add('hidden');
+            }
+
+            updateUI();
+            if (state.susp >= 100) { setTimeout(() => endGame(false), 1500); }
+        }
+
+        function updateUI() {
+            document.getElementById('val-reach').innerText = state.reach.toLocaleString();
+            document.getElementById('val-susp').innerText = state.susp + "%";
+            
+            const bar = document.getElementById('heat-bar');
+            bar.style.width = state.susp + "%";
+            if (state.susp < 40) bar.style.backgroundColor = "var(--success)";
+            else if (state.susp < 80) bar.style.backgroundColor = "var(--warning)";
+            else bar.style.backgroundColor = "var(--danger)";
+        }
+
+        function nextLevel() {
+            state.turn++;
+            loadLevel();
+        }
+
+        function endGame(survived) {
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            
+            const title = document.getElementById('end-title');
+            const desc = document.getElementById('end-desc');
+            
+            if (!survived) {
+                title.innerHTML = `<span style="color:var(--danger)">TÀI KHOẢN BỊ KHÓA</span>`;
+                desc.innerHTML = `Độ nghi ngờ chạm 100%. Nền tảng đã xóa tài khoản của bạn.<br><strong>Tổng tiếp cận: ${state.reach.toLocaleString()}</strong><br><br><span style="color:var(--text-muted); font-size:1rem;">Bài học: Việc thao túng tâm lý liên tục sớm muộn cũng để lại dấu vết.</span>`;
+            } else {
+                title.innerHTML = `<span style="color:var(--primary)">HOÀN THÀNH CHIẾN DỊCH</span>`;
+                desc.innerHTML = `Bạn đã lèo lái dư luận thành công qua 5 sự kiện.<br><strong>Tổng tiếp cận: ${state.reach.toLocaleString()} nạn nhân</strong><br><br><span style="color:var(--text-muted); font-size:1rem;">Tin giả nguy hiểm nhất không phải là nói dối hoàn toàn, mà là "Một nửa sự thật" được thiết kế để kích hoạt đúng cảm xúc của con người.</span>`;
+            }
+        }
+    </script>
+</body>
+</html>
