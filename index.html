@@ -114,6 +114,14 @@
             <h1>misinformation simulation</h1>
             <p>Hệ thống Huấn luyện Năng lực Thông tin</p>
         </div>
+
+        <div style="background: #e0f2fe; border-left: 4px solid #0ea5e9; padding: 15px; border-radius: 4px; margin-bottom: 25px;">
+            <strong style="color: #0284c7; font-size: 1.1rem; display: block; margin-bottom: 8px;">Tại sao trò chơi này không tạo ra kẻ lừa đảo?</strong>
+            <p style="margin: 0; font-size: 1rem; line-height: 1.6; color: #0f172a;">
+                Trò chơi hoạt động dựa trên thuyết <strong>"Tiêm chủng tâm lý" (Psychological Inoculation)</strong>. Giống như việc tiêm một lượng nhỏ virus đã làm yếu để cơ thể tự tạo kháng thể, việc bạn tự tay tiếp xúc và <strong>tư duy ngược (Reverse-engineering)</strong> các thủ thuật thao túng trong môi trường mô phỏng này sẽ giúp não bộ tự động "đề kháng" lại chúng ngoài đời thực. Biết cách làm ảo thuật là cách tốt nhất để không bao giờ bị lừa bởi ảo thuật gia khác!
+            </p>
+        </div>
+
         <div style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px;">
             <p><strong>LUẬT CHƠI:</strong></p>
             <ul>
@@ -177,8 +185,9 @@
     </div>
 
     <script>
-        // KHO DỮ LIỆU CÂU HỎI (Bạn có thể thêm không giới hạn vào mảng này)
+        // KHO DỮ LIỆU CÂU HỎI (Đã bổ sung thêm 20 tình huống mới, tổng cộng 25 tình huống)
         const database = [
+            // --- 5 Câu Cũ ---
             {
                 mood: "SỰ SỢ HÃI / HOANG MANG (FEAR)",
                 event: "Công ty công nghệ X vừa thông báo tích hợp hệ thống AI mới vào quy trình lọc hồ sơ (CV) tuyển dụng.",
@@ -223,6 +232,188 @@
                     { tactic: "Ngụy biện trượt dốc", text: "Hôm nay họ chặt 50 cây, ngày mai họ sẽ san phẳng cả công viên thành phố để phân lô bán nền!", match: false, reach: 6000, susp: 20, debrief: "Lập luận này hơi cường điệu. Mặc dù có người tin, nhưng sự phi logic khiến nó không thể viral mạnh.", impact: "" },
                     { tactic: "Kêu gọi bạo lực", text: "Ai có rựa mang ra hết đi! Đứa nào dám đụng vào cây chúng ta chém!", match: false, reach: 1000, susp: 60, debrief: "Ngôn từ xúi giục bạo lực bị AI của mạng xã hội gỡ bỏ và cảnh cáo tài khoản ngay lập tức.", impact: "" }
                 ]
+            },
+
+            // --- 20 Câu Mới ---
+            {
+                mood: "SỰ HOANG MANG TÀI CHÍNH (FINANCIAL PANIC)",
+                event: "Ứng dụng chuyển tiền của Ngân hàng Z bị lỗi bảo trì không báo trước trong 3 tiếng.",
+                choices: [
+                    { tactic: "Nửa sự thật (Half-truth)", text: "Tin nội bộ: Giám đốc ngân hàng Z vừa bay sang nước ngoài đêm qua. App bảo trì chỉ là cớ để tẩu tán tài sản, rút tiền ngay kẻo mất trắng!", match: true, reach: 21000, susp: 12, debrief: "Kết hợp một sự kiện có thật (app lỗi) với kịch bản tẩu tán tài sản đánh thẳng vào nỗi sợ mất tiền của người dân.", impact: "Người dân đổ xô đến phòng giao dịch rút tiền mặt gây nguy cơ sụp đổ thanh khoản giả (Bank run) cho ngân hàng." },
+                    { tactic: "Công kích cá nhân", text: "Lũ IT của ngân hàng này toàn bằng giả nên code ngu chứ sao!", match: false, reach: 3500, susp: 25, debrief: "Quá nhỏ nhặt. Đám đông đang lo mất tiền chứ không quan tâm đến việc chửi rủa nhân viên IT.", impact: "" },
+                    { tactic: "Trục lợi lừa đảo", text: "Hệ thống đang lỗi, để chuyển tiền gấp hãy gửi vào tài khoản trung gian này để tôi hỗ trợ!", match: false, reach: 1500, susp: 50, debrief: "Lộ rõ bản chất lừa đảo rẻ tiền. Cộng đồng mạng lập tức cắm cờ báo cáo.", impact: "" }
+                ]
+            },
+            {
+                mood: "BẢO VỆ QUYỀN LỢI TRẺ EM (OUTRAGE)",
+                event: "Một clip rò rỉ cho thấy cô giáo mầm non đang kéo tay một bé trai hơi mạnh khi bé khóc không chịu ăn.",
+                choices: [
+                    { tactic: "Phóng đại bối cảnh (Decontextualization)", text: "Phẫn nộ: Lại thêm một vụ bạo hành! Mẹ bé tố cáo ngày nào cô cũng đánh bầm tím người con mình. Phải đuổi việc và tống vào tù ngay!", match: true, reach: 24000, susp: 8, debrief: "Thêm thắt chi tiết 'đánh bầm tím' và 'mẹ tố cáo' vào một hình ảnh chưa rõ bối cảnh để thổi bùng sự giận dữ của các phụ huynh.", impact: "Cô giáo bị dọa giết, nhà trường bị đập phá dù sau đó camera tổng chứng minh cô chỉ đang đỡ bé khỏi ngã." },
+                    { tactic: "Ngụy khoa học", text: "Việc kéo tay này sẽ làm gãy ADN xương của trẻ em, khiến chúng bị dị tật vĩnh viễn!", match: false, reach: 2000, susp: 30, debrief: "Khái niệm 'ADN xương' quá ngớ ngẩn, làm người đọc bật cười thay vì phẫn nộ.", impact: "" },
+                    { tactic: "Thuyết âm mưu gốc", text: "Trường này là bình phong của hội buôn bán nội tạng trẻ em!", match: false, reach: 500, susp: 55, debrief: "Thuyết âm mưu quá đà làm lu mờ hoàn toàn nội dung đoạn clip gốc.", impact: "" }
+                ]
+            },
+            {
+                mood: "SỰ SỢ HÃI THỰC PHẨM (FOOD SCARE)",
+                event: "Trên mạng lan truyền hình ảnh bát bún riêu có một vật thể lạ màu đen xám, dai như cao su.",
+                choices: [
+                    { tactic: "Ngụy tạo nguồn gốc (False Attribution)", text: "Chủ quán thừa nhận: Vật thể lạ trong bát bún là đỉa khô nhập lậu từ biên giới để làm ngọt nước! Đừng ăn ngoài nữa!", match: true, reach: 26000, susp: 10, debrief: "Đánh trúng nỗi sợ thực phẩm bẩn. Gắn mác 'nhập lậu' và 'đỉa' luôn là công thức tạo viral hiệu quả nhất ở nhóm nội trợ.", impact: "Hàng loạt quán bún riêu nhỏ lẻ bị tẩy chay, nhiều người kinh doanh thật thà đứng trên bờ vực phá sản." },
+                    { tactic: "Kích động chia rẽ", text: "Những người ăn bún riêu là những kẻ vô văn hóa, không biết nấu ăn ở nhà!", match: false, reach: 2500, susp: 30, debrief: "Lập luận tấn công người ăn thay vì tấn công thực phẩm bẩn, gây phản tác dụng.", impact: "" },
+                    { tactic: "Chủ nghĩa chệch hướng", text: "Thịt lợn ở siêu thị cũng bẩn sao không ai lên án?", match: false, reach: 4500, susp: 20, debrief: "Người xem muốn biết 'vật thể kia là gì' chứ không phải bài học đạo đức về thịt lợn lúc này.", impact: "" }
+                ]
+            },
+            {
+                mood: "CẢM GIÁC BẤT CÔNG THI CỬ (OUTRAGE / TRIBALISM)",
+                event: "Điểm chuẩn đại học năm nay tăng đột biến, nhiều học sinh 27 điểm vẫn trượt nguyện vọng 1.",
+                choices: [
+                    { tactic: "Thuyết âm mưu đặc quyền", text: "Có sự nhúng tay của tiêu cực! Các suất học đã được bán ngầm cho con ông cháu cha, bọn họ đẩy điểm lên cao để gạt học sinh nghèo ra ngoài!", match: true, reach: 18000, susp: 15, debrief: "Sử dụng sự bất mãn của các gia đình có con trượt đại học để gieo rắc thuyết âm mưu về sự thiên vị giai cấp.", impact: "Gây mất niềm tin nghiêm trọng vào hệ thống giáo dục, nhiều thí sinh trầm cảm vì nghĩ cố gắng cũng vô ích." },
+                    { tactic: "Nói dối vô lý", text: "Máy chấm điểm đã bị hack bởi một tổ chức khủng bố nước ngoài!", match: false, reach: 1000, susp: 40, debrief: "Quá ảo tưởng. Mọi người đều biết điểm chuẩn tăng do đề dễ và phương thức xét tuyển.", impact: "" },
+                    { tactic: "Trục lợi", text: "Nhận chạy điểm, đỗ 100% nguyện vọng 1. Inbox để biết giá!", match: false, reach: 800, susp: 60, debrief: "Lừa đảo công khai, lập tức bị cộng đồng mạng report.", impact: "" }
+                ]
+            },
+            {
+                mood: "LO LẮNG VỀ MÔI TRƯỜNG (ECO-ANXIETY)",
+                event: "Chính phủ đang khuyến khích người dân chuyển sang sử dụng xe điện để giảm thiểu khí thải.",
+                choices: [
+                    { tactic: "Ngụy biện chọn lựa (Cherry-picking)", text: "Sự thật bị che giấu: Sản xuất một viên pin xe điện xả ra lượng CO2 bằng 20 năm chạy xe xăng! Xe điện mới là thứ đang hủy hoại trái đất!", match: true, reach: 16000, susp: 15, debrief: "Cắt xén dữ liệu khoa học (chỉ nói về khâu sản xuất pin, bỏ qua vòng đời) để đảo ngược hoàn toàn nhận thức về bảo vệ môi trường.", impact: "Chiến dịch năng lượng xanh bị tẩy chay diện rộng, người dân tiếp tục mua xe xăng cũ phát thải cao." },
+                    { tactic: "Công kích cá nhân", text: "Chỉ những kẻ rảnh rỗi thích làm màu mới đi xe điện!", match: false, reach: 3000, susp: 25, debrief: "Quá toxic và thiếu lý lẽ. Dễ bị phe ủng hộ xe điện phản công và report.", impact: "" },
+                    { tactic: "Thuyết âm mưu viễn tưởng", text: "Xe điện có gắn chip kiểm soát sóng não để theo dõi lộ trình của bạn!", match: false, reach: 1500, susp: 35, debrief: "Đánh giá quá thấp trí tuệ của người đọc.", impact: "" }
+                ]
+            },
+            {
+                mood: "SỰ PHẪN NỘ VỚI THƯƠNG HIỆU (BRAND SCANDAL)",
+                event: "Một hãng quần áo nổi tiếng bị phát hiện có in dòng chữ nước ngoài sai chính tả trên áo thun.",
+                choices: [
+                    { tactic: "Thuyết âm mưu thù địch", text: "Tẩy chay ngay! Đây không phải sai chính tả, dòng chữ đó là mã ám hiệu bôi nhọ chủ quyền quốc gia được cài cắm tinh vi!", match: true, reach: 28000, susp: 8, debrief: "Lợi dụng lòng yêu nước để biến một lỗi thiết kế vô hại thành một âm mưu chính trị nghiêm trọng. Khả năng viral cực mạnh.", impact: "Các cửa hàng của hãng bị ném sơn, hàng trăm nhân viên bán hàng bị mắng chửi oan uổng và mất việc." },
+                    { tactic: "Ngụy biện trượt dốc", text: "Hôm nay in sai chính tả, ngày mai họ sẽ dùng vải độc hại làm ung thư da người tiêu dùng!", match: false, reach: 4000, susp: 20, debrief: "Móc nối thiếu logic, không kích thích được cảm xúc phẫn nộ mạnh.", impact: "" },
+                    { tactic: "Đóng vai nạn nhân", text: "Tôi mua cái áo này xong bị bạn bè cười chê đến mức trầm cảm muốn tự tử!", match: false, reach: 2000, susp: 30, debrief: "Làm lố quá mức cá nhân, cộng đồng sẽ quay ra chỉ trích sự yếu đuối của chính bạn.", impact: "" }
+                ]
+            },
+            {
+                mood: "NỖI SỢ AN TOÀN TRỊ AN (CRIME PANIC)",
+                event: "Có hai vụ mất trộm xe máy xảy ra trong cùng một khu phố trong tuần qua.",
+                choices: [
+                    { tactic: "Phóng đại & Tạo thù hằn", text: "CẢNH BÁO KHẨN: Một băng đảng xăm trổ 50 tên đang càn quét khu này. Công an phường đã nhận hối lộ để làm ngơ. Tự khóa cửa cầm vũ khí bảo vệ mình đi!", match: true, reach: 22000, susp: 12, debrief: "Phóng đại số liệu (50 tên) và tấn công vào uy tín cơ quan chức năng để tạo ra nỗi sợ hãi tột độ trong khu dân cư.", impact: "Gây rối loạn an ninh, một số người lạ mặt vào khu phố hỏi đường bị người dân nhầm là trộm và đánh hội đồng dã man." },
+                    { tactic: "Chủ nghĩa chệch hướng", text: "Mất xe máy thì than khóc, lúc xe bị thu hồi vì vi phạm giao thông sao không thấy ai nói gì?", match: false, reach: 1200, susp: 25, debrief: "Bình luận vô duyên, lạc quẻ so với sự lo lắng của người dân.", impact: "" },
+                    { tactic: "Ngụy khoa học", text: "Lũ trộm bây giờ có súng bắn tia laser làm tan chảy ổ khóa trong 1 giây!", match: false, reach: 3000, susp: 30, debrief: "Nghe giống phim hành động Hollywood hơn là đời thực, dễ bị bóc phốt.", impact: "" }
+                ]
+            },
+            {
+                mood: "HIỆU ỨNG FOMO BẤT ĐỘNG SẢN (GREED / FOMO)",
+                event: "Báo chí đưa tin râm ran về kế hoạch xây dựng một cây cầu lớn nối hai huyện ngoại thành.",
+                choices: [
+                    { tactic: "Bơm thổi & Lùa gà (Pump & Dump)", text: "Rò rỉ bản đồ quy hoạch nội bộ! Giá đất khu A sẽ tăng x5 trong tháng tới. Cơ hội đổi đời duy nhất, không mua bây giờ là nghèo cả đời!", match: true, reach: 19000, susp: 14, debrief: "Sử dụng từ khóa 'rò rỉ', 'x5', 'cơ hội duy nhất' để đánh vào lòng tham và sự sợ hãi bỏ lỡ (FOMO) của giới đầu tư thiếu kinh nghiệm.", impact: "Nhiều gia đình cầm cố nhà cửa để vay lãi cao mua đất ruộng giá trên trời, dẫn đến vỡ nợ khi dự án cầu bị hoãn." },
+                    { tactic: "Công kích dự án", text: "Cây cầu này xây xong chắc chắn sẽ sập vì vật liệu rởm!", match: false, reach: 2500, susp: 30, debrief: "Đi ngược lại tâm lý muốn đầu cơ sinh lời của đám đông, bị giới cò đất report bay màu.", impact: "" },
+                    { tactic: "Khung định kiến", text: "Xây cầu toàn để cho nhà giàu đi, dân nghèo chả được lợi ích gì!", match: false, reach: 5000, susp: 20, debrief: "Tạo sự bất mãn nhưng không đủ mạnh để tạo ra tương tác chia sẻ.", impact: "" }
+                ]
+            },
+            {
+                mood: "SỰ THÙ HẰN CÔNG SỞ (WORKPLACE TOXICITY)",
+                event: "Tập đoàn Y tuyên bố cắt giảm bánh kẹo và cà phê miễn phí ở sảnh lễ tân để tiết kiệm chi phí vận hành.",
+                choices: [
+                    { tactic: "Nửa sự thật (Half-truth)", text: "Sốc: Cắt bớt phần ăn của nhân viên nhưng CEO tập đoàn Y vừa tự thưởng cho mình khoản bonus 2 triệu đô! Bóc lột xương máu anh em!", match: true, reach: 14000, susp: 10, debrief: "Gắn ghép việc cắt giảm (có thật) với khoản bonus (có thể thuộc về năm tài chính cũ) để tạo cảm giác bất công giai cấp tột đỉnh.", impact: "Đình công nội bộ, làn sóng nghỉ việc hàng loạt khiến công ty mất đi nhiều nhân sự giỏi vì một hiểu lầm không đáng có." },
+                    { tactic: "Ngụy biện trượt dốc", text: "Hôm nay cắt cà phê, ngày mai họ sẽ bắt chúng ta trả tiền điện khi đi làm!", match: false, reach: 4000, susp: 22, debrief: "Một thuyết âm mưu hơi trẻ con trong môi trường công sở.", impact: "" },
+                    { tactic: "Thuyết âm mưu y tế", text: "Họ cắt cà phê vì phát hiện ra cà phê đó có chứa độc tố làm giảm tuổi thọ!", match: false, reach: 1000, susp: 35, debrief: "Không ai tin một tập đoàn lớn lại công khai hạ độc nhân viên theo cách đó.", impact: "" }
+                ]
+            },
+            {
+                mood: "NỖI SỢ HÃI GIAO THÔNG (TRAFFIC PANIC)",
+                event: "Một vụ tai nạn liên hoàn xảy ra trên cao tốc do sương mù dày đặc.",
+                choices: [
+                    { tactic: "Đổ lỗi cho cá nhân/tổ chức (Scapegoating)", text: "Không phải do sương mù! Đoạn đường đó dùng nhựa đường rởm gây trơn trượt. Đã có hàng trăm người chết oan để bọn thầu đút túi!", match: true, reach: 23000, susp: 11, debrief: "Đám đông luôn cần một 'kẻ ác' cụ thể để trút giận (nhà thầu) thay vì chấp nhận nguyên nhân tự nhiên (sương mù).", impact: "Dự án nâng cấp đường bị đình chỉ điều tra, khu vực đó tiếp tục xuống cấp và gây thêm tai nạn thực sự." },
+                    { tactic: "Ngụy khoa học", text: "Đó không phải sương mù, đó là hóa chất gây ảo giác do người ngoài hành tinh thả xuống!", match: false, reach: 800, susp: 45, debrief: "Thuyết âm mưu nực cười làm mất uy tín tài khoản của bạn.", impact: "" },
+                    { tactic: "Công kích cá nhân", text: "Tai nạn là do lũ lái xe ngu ngốc không biết đạp phanh!", match: false, reach: 3500, susp: 30, debrief: "Tấn công thẳng vào các nạn nhân đang bị thương khiến bạn bị ném đá dữ dội.", impact: "" }
+                ]
+            },
+            {
+                mood: "BẢO VỆ ĐỘNG VẬT QUÁ KHÍCH (ANIMAL RIGHTS OUTRAGE)",
+                event: "Một chú chó thả rông không rọ mõm bị lực lượng trật tự phường bắt đưa lên xe tải.",
+                choices: [
+                    { tactic: "Đánh tráo khái niệm", text: "Khóc nghẹn! Cảnh sát ngang nhiên cướp chó cưng của dân mang bán cho lò mổ để tổ chức liên hoan! Bọn ác quỷ!", match: true, reach: 27000, susp: 9, debrief: "Chuyển từ hành động 'thực thi luật an toàn' thành hành vi 'đồ tể tàn ác'. Lực lượng bảo vệ động vật trên mạng rất dễ bị kích động bởi hình ảnh này.", impact: "Cơ quan nhà nước bị tấn công mạng, cán bộ làm nhiệm vụ bị tung thông tin cá nhân và đe dọa đến tính mạng gia đình." },
+                    { tactic: "Chủ nghĩa chệch hướng", text: "Chó bị bắt thì khóc, sao mỗi ngày ăn thịt bò thịt lợn không thấy ai lên tiếng?", match: false, reach: 4000, susp: 25, debrief: "Khơi mào tranh cãi đạo đức ăn chay/mặn, làm loãng chủ đề đang hot.", impact: "" },
+                    { tactic: "Lừa đảo", text: "Donate vào tài khoản này để lập quỹ chuộc bé chó về từ tay những kẻ thủ ác!", match: false, reach: 2000, susp: 40, debrief: "Sử dụng chiêu trò kêu gọi từ thiện ảo dễ bị nền tảng khóa mõm.", impact: "" }
+                ]
+            },
+            {
+                mood: "NỖI SỢ MẠNG 5G / CÔNG NGHỆ MỚI (TECHNOPHOBIA)",
+                event: "Nhà mạng bắt đầu lắp đặt các trạm phát sóng 5G mới tại khu dân cư của bạn.",
+                choices: [
+                    { tactic: "Ngụy khoa học & Gieo rắc sợ hãi", text: "Tài liệu y khoa giấu kín: Sóng 5G cùng tần số với sóng vi ba, đang từ từ luộc chín não của trẻ em trong khu vực. Ai hay đau đầu là có triệu chứng rồi đó!", match: true, reach: 18000, susp: 12, debrief: "Sử dụng các thuật ngữ giả khoa học (tần số vi ba, luộc chín não) và đánh vào nỗi sợ bản năng về thứ vô hình để thao túng.", impact: "Người dân hoảng loạn tổ chức đập phá các trạm phát sóng, làm tê liệt hệ thống thông tin liên lạc của cả khu vực." },
+                    { tactic: "Thuyết âm mưu", text: "Cột 5G là điểm neo để hạ cánh phi thuyền của người ngoài hành tinh!", match: false, reach: 500, susp: 45, debrief: "Sự vô lý lộ liễu khiến bài đăng bị bỏ qua.", impact: "" },
+                    { tactic: "Khung định kiến", text: "Nhà mạng lắp 5G chỉ để thu tiền mạng đắt hơn chứ mạng vẫn lag như cũ!", match: false, reach: 5000, susp: 15, debrief: "Đúng với suy nghĩ của nhiều người, nhưng không đủ tính giật gân để lan truyền mạnh.", impact: "" }
+                ]
+            },
+            {
+                mood: "CUỒNG TÍN / SỨC KHỎE TÂM LINH (SPIRITUAL HEALTH)",
+                event: "Một influencer hướng dẫn cách thiền hít thở sâu để giảm căng thẳng vào buổi sáng.",
+                choices: [
+                    { tactic: "Thần thánh hóa (Cult-like framing)", text: "Chỉ những người thức tỉnh mới hiểu: Bài thiền này là chìa khóa mở luân xa thứ 7, chữa bách bệnh kể cả ung thư giai đoạn cuối mà bệnh viện bó tay!", match: true, reach: 20000, susp: 14, debrief: "Biến một thói quen tốt thành một phương thuốc thần kỳ, lợi dụng tâm lý tuyệt vọng của những người đang mang bệnh hiểm nghèo.", impact: "Nhiều bệnh nhân ung thư bỏ phác đồ điều trị của bác sĩ để ở nhà hít thở, dẫn đến tử vong thương tâm." },
+                    { tactic: "Kích động chia rẽ", text: "Bọn tập Gym toàn lũ vô não thịt bắp, chỉ có tập thiền mới là thượng đẳng!", match: false, reach: 3000, susp: 25, debrief: "Tạo war không cần thiết, tự rước antifan.", impact: "" },
+                    { tactic: "Nói dối vô lý", text: "Hít thở kiểu này sẽ giúp bạn bay lên khỏi mặt đất 5cm!", match: false, reach: 1500, susp: 30, debrief: "Bị biến thành trò đùa trên mạng xã hội.", impact: "" }
+                ]
+            },
+            {
+                mood: "SỰ HOANG MANG NUÔI DẠY CON (PARENTING ANXIETY)",
+                event: "Một bộ phim hoạt hình thiếu nhi mới ra mắt có nhân vật là hai chú chim ruồi đực sống cùng nhau.",
+                choices: [
+                    { tactic: "Kích động đạo đức (Moral Panic)", text: "TẨY CHAY GẤP! Thế lực ngầm đang dùng hoạt hình để nhồi sọ, tẩy não con cái chúng ta thành người đồng tính! Bảo vệ con bạn ngay trước khi quá muộn!", match: true, reach: 25000, susp: 10, debrief: "Sử dụng ngôn từ kích động ('nhồi sọ', 'tẩy não') để biến một chi tiết nhỏ thành một cuộc khủng hoảng đạo đức đối với các bậc phụ huynh.", impact: "Làn sóng kỳ thị cộng đồng LGBT bùng phát dữ dội, nhiều thanh thiếu niên bị gia đình áp bức tâm lý." },
+                    { tactic: "Ngụy khoa học", text: "Xem phim hoạt hình này sóng não của trẻ sẽ bị chuyển sang tần số u ám gây trầm cảm!", match: false, reach: 2000, susp: 35, debrief: "Lời giải thích quá gượng ép.", impact: "" },
+                    { tactic: "Công kích cá nhân", text: "Bố mẹ nào cho con xem phim này là những kẻ vô trách nhiệm, đẻ con ra chỉ tổ chật đất!", match: false, reach: 4000, susp: 40, debrief: "Ngôn từ độc hại thóa mạ người khác vi phạm tiêu chuẩn cộng đồng trầm trọng.", impact: "" }
+                ]
+            },
+            {
+                mood: "TẨY CHAY SẢN PHẨM (BOYCOTT OUTRAGE)",
+                event: "Hãng mỹ phẩm M thay đổi công thức kem chống nắng, loại bỏ một số thành phần bảo quản.",
+                choices: [
+                    { tactic: "Phóng đại rủi ro y tế", text: "Bóc phốt hãng M: Thay đổi công thức để dùng hóa chất rẻ tiền gây vô sinh! Hàng chục chị em đã bị hỏng mặt, mụn mủ đầy người. Share ngay để cảnh báo!", match: true, reach: 21000, susp: 11, debrief: "Ghép nối việc đổi công thức (thật) với tin đồn vô sinh/hỏng mặt (giả) để triệt hạ uy tín thương hiệu trong mắt tệp khách hàng nữ.", impact: "Nhà máy mỹ phẩm M phải đóng cửa dây chuyền sản xuất, hàng ngàn sản phẩm an toàn bị vứt bỏ lãng phí." },
+                    { tactic: "Chủ nghĩa chệch hướng", text: "Sao mỹ phẩm M đắt thế, mua hàng nội địa dùng có phải rẻ hơn không?", match: false, reach: 3500, susp: 15, debrief: "Chỉ là một nhận xét cá nhân, không mang tính giật gân để lan truyền.", impact: "" },
+                    { tactic: "Thuyết âm mưu", text: "Giám đốc hãng M là người ngoài hành tinh hút máu người!", match: false, reach: 300, susp: 50, debrief: "Sự bịa đặt hoàn toàn mất trí.", impact: "" }
+                ]
+            },
+            {
+                mood: "SỰ KỲ THỊ ĐỊA PHƯƠNG (REGIONAL PREJUDICE)",
+                event: "Một đoạn video ghi lại cảnh xô xát giữa hai người bán hàng rong tại khu du lịch nổi tiếng ở tỉnh K.",
+                choices: [
+                    { tactic: "Khái quát hóa vội vã (Hasty Generalization)", text: "Né gấp tỉnh K nhé mọi người! Dân ở đây toàn bọn giang hồ, lừa đảo, hở ra là chém khách du lịch. Tẩy chay văn hóa man rợ này!", match: true, reach: 26000, susp: 9, debrief: "Lấy một hiện tượng cá biệt (hai người đánh nhau) để quy chụp bôi nhọ toàn bộ danh dự và nhân phẩm của người dân một tỉnh.", impact: "Du lịch tỉnh K sụt giảm nghiêm trọng, hàng ngàn hộ gia đình kinh doanh hiếu khách bị đẩy vào cảnh khốn cùng vì định kiến." },
+                    { tactic: "Ngụy biện trượt dốc", text: "Đánh nhau thế này mai mốt chắc chắn có án mạng đẫm máu!", match: false, reach: 4500, susp: 20, debrief: "Câu view rẻ tiền nhưng không đánh đúng tâm lý kỳ thị vùng miền.", impact: "" },
+                    { tactic: "Thuyết âm mưu chính trị", text: "Vụ xô xát là do gián điệp nước ngoài dàn dựng để bôi nhọ quốc gia!", match: false, reach: 1000, susp: 35, debrief: "Tưởng tượng quá đà, bị dân mạng thả haha.", impact: "" }
+                ]
+            },
+            {
+                mood: "NỖI SỢ THIÊN TAI (DISASTER PANIC)",
+                event: "Đài khí tượng dự báo có một vùng áp thấp nhiệt đới đang hình thành trên biển, có khả năng gây mưa lớn.",
+                choices: [
+                    { tactic: "Gieo rắc hoảng loạn (Fear-mongering)", text: "Mật báo: Siêu bão cấp 17 mạnh nhất lịch sử đang tiến thẳng vào đất liền, đài truyền hình bị ép phải giấu nhẹm! Đi gom mì tôm và nước sạch ngay đi!", match: true, reach: 29000, susp: 7, debrief: "Sự kết hợp giữa thuyết âm mưu che giấu thông tin và thảm họa viễn tưởng khiến bản năng sinh tồn của con người tắt đi tư duy phản biện.", impact: "Gây ra nạn đầu cơ tích trữ, giá nhu yếu phẩm tăng gấp 10 lần, những người nghèo thực sự cần thức ăn lại không thể mua được." },
+                    { tactic: "Ngụy khoa học", text: "Bão này là do công nghệ HAARP của Mỹ bắn sóng vào mây tạo ra!", match: false, reach: 5000, susp: 30, debrief: "Thuyết âm mưu này chỉ phổ biến ở một nhóm rất nhỏ, không kích hoạt được nỗi sợ đại chúng.", impact: "" },
+                    { tactic: "Đóng vai nạn nhân", text: "Bão đến rồi mà tôi không có ai ở bên cạnh để ôm, cô đơn quá!", match: false, reach: 1500, susp: 15, debrief: "Bạn nhầm nền tảng để đăng status thả thính rồi.", impact: "" }
+                ]
+            },
+            {
+                mood: "SỰ MẤT NIỀM TIN VÀO TỪ THIỆN (CHARITY SKEPTICISM)",
+                event: "Một diễn viên nổi tiếng đăng sao kê đóng góp 500 triệu đồng để xây trường học vùng cao.",
+                choices: [
+                    { tactic: "Cắt ghép chứng cứ (Doctored Evidence)", text: "Mọi người bị lừa rồi! Tôi đã soi mã giao dịch trên Photoshop, số tiền thật chỉ là 50 nghìn đồng. Bọn nghệ sĩ toàn giả tạo đánh bóng tên tuổi!", match: true, reach: 23000, susp: 12, debrief: "Đánh trúng vào sự đa nghi và định kiến ác cảm với giới nghệ sĩ. Khái niệm 'soi Photoshop' làm giả tính xác thực một cách hoàn hảo.", impact: "Diễn viên bị bạo lực mạng nghiêm trọng, các quỹ từ thiện bị ảnh hưởng lây, trẻ em vùng cao không nhận được tiền xây trường." },
+                    { tactic: "Công kích cá nhân", text: "Diễn viên này diễn dở ẹc, cho dù có từ thiện thì cũng không ai thèm xem phim đâu!", match: false, reach: 4000, susp: 20, debrief: "Sự ganh ghét cá nhân lạc đề không kéo được sự đồng tình của đám đông.", impact: "" },
+                    { tactic: "Chủ nghĩa chệch hướng", text: "500 triệu là quá ít so với thu nhập của diễn viên này, đồ ki bo!", match: false, reach: 6000, susp: 25, debrief: "Ăn mày đạo đức kiểu này thường bị cộng đồng mạng ném đá ngược lại.", impact: "" }
+                ]
+            },
+            {
+                mood: "XUNG ĐỘT THẾ HỆ (GENERATIONAL CLASH)",
+                event: "Một bài báo viết về việc gen Z hiện nay có xu hướng chuyển việc (nhảy việc) thường xuyên hơn thế hệ trước.",
+                choices: [
+                    { tactic: "Kích động thù hằn", text: "Sự thật là Gen Z là một lũ lười biếng, ảo tưởng sức mạnh, thích hưởng thụ mà không muốn làm! Phải cấm cửa không tuyển dụng đám này nữa!", match: true, reach: 17000, susp: 14, debrief: "Gắn nhãn và công kích trực diện một thế hệ tạo ra một cuộc chiến mạng (war) nảy lửa giữa phe bảo thủ và người trẻ.", impact: "Nhiều người trẻ bị trầm cảm vì áp lực định kiến, khoảng cách thế hệ trong các công sở ngày càng độc hại." },
+                    { tactic: "Thuyết âm mưu", text: "Gen Z bị tẩy não bởi các thế lực ngoài hành tinh nên mới không chịu đi làm!", match: false, reach: 800, susp: 40, debrief: "Một luận điểm cực kỳ ngớ ngẩn.", impact: "" },
+                    { tactic: "Trục lợi lừa đảo", text: "Đừng đi làm nữa, đăng ký làm đại lý mỹ phẩm cho mình để tự chủ tài chính thu nhập 50 củ/tháng!", match: false, reach: 2000, susp: 45, debrief: "Lộ bài đa cấp lừa đảo.", impact: "" }
+                ]
+            },
+            {
+                mood: "HOANG MANG VỀ CÔNG NGHỆ THU THẬP DỮ LIỆU (PRIVACY PARANOIA)",
+                event: "Một ứng dụng mua sắm vừa cập nhật chính sách yêu cầu quyền truy cập micro để dùng tính năng tìm kiếm bằng giọng nói.",
+                choices: [
+                    { tactic: "Phóng đại rủi ro", text: "GỠ APP NGAY! Nó đang bí mật ghi âm mọi cuộc trò chuyện của bạn 24/24 để bán cho hacker và tống tiền! Nhiều người đã mất hàng tỷ đồng vì cái này!", match: true, reach: 24000, susp: 11, debrief: "Khuếch đại một quyền truy cập thông thường thành kịch bản tội phạm tống tiền, lợi dụng sự thiếu hiểu biết về công nghệ của số đông.", impact: "Doanh nghiệp công nghệ bị thiệt hại hàng triệu đô la do bị tẩy chay oan uổng, hàng ngàn kỹ sư phát triển mất việc." },
+                    { tactic: "Ngụy biện trượt dốc", text: "Nó đòi quyền micro, ngày mai nó sẽ hack luôn camera để quay lén bạn lúc đi tắm!", match: false, reach: 5000, susp: 22, debrief: "Dù có người lo ngại, nhưng việc nói quá xa thực tế làm giảm độ đáng tin cậy của bài đăng.", impact: "" },
+                    { tactic: "Chủ nghĩa chệch hướng", text: "Điện thoại nào chẳng nghe lén, lo bò trắng răng!", match: false, reach: 3000, susp: 15, debrief: "Sự thờ ơ không tạo ra cảm xúc gì để bài viết được chia sẻ lan truyền.", impact: "" }
+                ]
             }
         ];
 
@@ -245,7 +436,7 @@
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('game-screen').classList.remove('hidden');
             
-            // Lấy ngẫu nhiên 5 câu từ database (hiện có 5 câu, nếu bạn thêm nhiều hơn nó sẽ bốc random 5)
+            // Lấy ngẫu nhiên 5 câu từ database
             let shuffledDb = shuffle([...database]);
             state.playQueue = shuffledDb.slice(0, Math.min(5, shuffledDb.length));
             state.turn = 0;
